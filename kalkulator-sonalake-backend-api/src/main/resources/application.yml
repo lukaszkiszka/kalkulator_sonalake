@@ -1,0 +1,52 @@
+server:
+ port: 8090
+
+logging:
+  config: classpath:logback-spring.xml
+  
+spring:
+  datasource:
+    url: jdbc:h2:mem:sonalake_kalkulator2;DB_CLOSE_DELAY=-1
+    platform: h2
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    initialize: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+
+  h2:
+    console:
+      enabled: true
+      
+hystrix:
+  command:
+    nbpApi:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000  
+      circuitBreaker:
+        requestVolumeThreshold: 10              
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000        
+
+ #timeout komendy hystrixowej "randomCommand" zdefinowanej w klasie RandomGeneratorServiceClientHystrixAware adnotacją @HystrixCommand(commandKey = "randomCommand")
+ #liczba requestów, dla których musi wystąpić timeout w 10 sekundowym oknie, aby circuit breaker otworzył obwód
+ #czas okna, w którym zliczane są błędne requesty
+ 
+        
+## Application properties
+api:
+  nbp:
+    exchangerate:
+      url: http://api.nbp.pl/api/exchangerates/rates/A/{currencyCode}

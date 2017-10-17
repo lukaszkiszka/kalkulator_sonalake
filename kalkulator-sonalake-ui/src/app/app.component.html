@@ -1,0 +1,57 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to Monthly Net Profit Calculator!
+  </h1>
+  
+</div>
+
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Calculate net profit from contract</legend>
+  <span class="help-block">
+  Select country where you want to work and insert a net daily rate in a currency of a selected country.<br />
+  Application will calculate a net monthly profit in PLN currency.
+  </span>  
+  
+  <div *ngIf="isError" class="alert alert-danger">
+	<strong>Error!</strong> <br />
+	{{error}}
+  </div>
+  
+  <div *ngIf="isCalculateResponse" class="alert alert-success">
+	Calculated month net profit for entered data is {{calculateResponse}} PLN.
+  </div>
+  
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Country</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control" [(ngModel)]="selectedCountry" required>
+	  <option *ngFor="let country of countries" [ngValue]="country">{{country}}</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Net daily rate</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="number" placeholder="Net daily profit" class="form-control input-md" [(ngModel)]="netDailyRate"  required>
+
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-8">
+    <button id="singlebutton" name="singlebutton" class="btn btn-success" (click)="calculateNetProfitClick()">Calculate!</button>
+    <button id="resetbutton" name="resetbutton" class="btn btn-danger" (click)="resetClick()">Reset</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
